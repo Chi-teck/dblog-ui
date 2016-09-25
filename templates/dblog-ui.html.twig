@@ -1,0 +1,127 @@
+<div id="dblog-ui-app" v-cloak>
+  <router-view></router-view>
+</div>
+
+<template id="dblog-ui-list">
+
+  <details class="dblog-ui-filters" open>
+    <summary>Filter log message</summary>
+    <div class="details-wrapper">
+      <div class="form-item" v-if="typeOptions.length">
+        <label for="edit-type">Type</label>
+        <select multiple="multiple" id="edit-type" size="8" class="form-select" v-model="type" @change="filter()">
+          {% verbatim %}
+          <option v-for="option in typeOptions" value="{{ option }}">{{ option }}</option>
+          {% endverbatim %}
+        </select>
+      </div>
+      <div class="form-item">
+        <label for="edit-type">Severity</label>
+        <select multiple="multiple" id="edit-type" size="8" class="form-select" v-model="severity" @change="filter()">
+          {% verbatim %}
+          <option v-for="(value, label) in severityOptions" value="{{ value }}">{{ label }}</option>
+          {% endverbatim %}
+        </select>
+      </div>
+      <div class="form-item form-actions">
+        <button class="button" @click="reset">Reset</button>
+      </div>
+    </div>
+  </details>
+  <table>
+    <thead>
+      <tr>
+        <th :class="activeClass('type')">
+          <a v-link="typePath">Type <table-sort-indicator :order="'type'"></table-sort-indicator></a>
+        </th>
+        <th :class="activeClass('date')">
+          <a v-link="datePath">Date <table-sort-indicator :order="'date'" :default="true"></table-sort-indicator></a>
+        </th>
+        <th>Message</th>
+        <th :class="activeClass('user')">
+          <a v-link="userPath">User <table-sort-indicator :order="'user'"></table-sort-indicator></a>
+        </th>
+      </tr>
+    </thead>
+    <tbody :class="{'dblog-ui-data-loading' : loading}" transition="expand">
+      <tr v-for="record in records">
+        {% verbatim %}
+        <td>{{ record.type }}</td>
+        <td>{{ record.date }}</td>
+        <td>
+          <a v-link="{name: 'details', params: {eventId: record.id}}">{{{ record.message }}}</a>
+        </td>
+        <td v-if="record.user.url">
+          <a href="{{ record.user.url }}">{{ record.user.name }}</a>
+        </td>
+        <td v-else>{{ record.user.name }}</td>
+        {% endverbatim %}
+      </tr>
+      <tr v-if="!records.length">
+        <td colspan="4" v-if="loading">Loading...</td>
+        <td colspan="4" v-else >No log messages available.</td>
+      </tr>
+    </tbody>
+  </table>
+  <pager :total="totalPages" @click="updateData('type')"></pager>
+
+</template>
+
+<template id="dblog-ui-table-sort-indicator">
+  <span v-if="show" class="tablesort" :class="sortClass">
+    <span v-if="sort == 'desc'" class="visually-hidden">Sort ascending</span>
+    <span v-else class="visually-hidden">Sort descending</span>
+  </span>
+</template>
+
+<template id="dblog-ui-details">
+  {% verbatim %}
+  <table class="dblog-ui-event">
+    <tbody>
+    <tr>
+      <th>Type</th>
+      <td>{{ event.type }}</td>
+    </tr>
+    <tr>
+      <th>Date</th>
+      <td>{{ event.date }}</td>
+    </tr>
+    <tr>
+      <th>User</th>
+      <td v-if="event.user.url">
+        <a href="{{ event.user.url }}">{{ event.user.name }}</a>
+      </td>
+      <td v-else>{{ event.user.name }}</td>
+    </tr>
+    <tr>
+      <th>Location</th>
+      <td>
+        <a href="{{ event.location }}" v-if="event.location">{{ event.location }}</a>
+      </td>
+    </tr>
+    <tr>
+      <th>Referrer</th>
+      <td>
+        <a href="{{ event.referrer }}" v-if="event.referrer">{{ event.referrer }}</a>
+      </td>
+    </tr>
+    <tr>
+      <th>Message</th>
+      <td>{{{ event.message }}}</td>
+    </tr>
+    <tr>
+      <th>Severity</th>
+      <td>{{ severityLevels[event.severity] }}</td>
+    </tr>
+    <tr>
+      <th>Hostname</th>
+      <td>{{ event.hostname }}</td>
+    </tr>
+    <tr>
+      <th>Operations</th>
+      <td>{{{ event.link }}}</td>
+    </tr>
+    </tbody>
+  </table>
+ {% endverbatim %}
+</template>

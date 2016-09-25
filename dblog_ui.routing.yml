@@ -1,0 +1,23 @@
+dblog_ui.reports:
+  path: '/admin/reports/dblog_ui'
+  defaults:
+    _controller: '\Drupal\dblog_ui\Controller\DblogUiController::overview'
+    _title: 'Dblog ui report'
+  requirements:
+    _permission: 'access site reports'
+
+dblog_ui.records:
+  path: '/api/dblog-ui/events'
+  defaults:
+    _controller: '\Drupal\dblog_ui\Controller\DblogUiController::events'
+    _title: 'Dblog ui report'
+  requirements:
+    _permission: 'access site reports'
+
+dblog_ui.record:
+  path: '/api/dblog-ui/event/{event_id}'
+  defaults:
+    _controller: '\Drupal\dblog_ui\Controller\DblogUiController::eventDetails'
+    _title: 'Details'
+  requirements:
+    _permission: 'access site reports'

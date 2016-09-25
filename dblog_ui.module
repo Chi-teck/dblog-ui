@@ -1,0 +1,13 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for Dblog ui module.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function dblog_ui_theme() {
+  return ['dblog_ui' => ['variables' => []]];
+}

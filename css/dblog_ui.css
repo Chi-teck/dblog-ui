@@ -1,0 +1,36 @@
+[v-cloak] {
+  display: none;
+}
+
+.dblog-ui-data-loading {
+  opacity: 0.25;
+}
+
+
+.dblog-ui-filters .form-item {
+  display: inline-block;
+  margin: .1em .9em .1em .1em;
+  max-width: 30%;
+}
+
+.dblog-ui-filters .form-actions {
+  padding: 3ex 0 0;
+  vertical-align: top;
+}
+
+/* always present */
+.expand-transition {
+  transition: all .55s ease;
+}
+
+/* .expand-enter defines the starting state for entering */
+/* .expand-leave defines the ending state for leaving */
+.expand-enter {
+  /*transform: translateX(30%);*/
+  opacity: 0;
+}
+
+.expand-leave {
+  display: none;
+  opacity: 0;
+}

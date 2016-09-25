@@ -1,0 +1,59 @@
+vuejs:
+  remote: https://vuejs.org
+  version: 1.0.26
+  license:
+    name: MIT
+    url: https://github.com/vuejs/vue/blob/dev/LICENSE
+    gpl-compatible: true
+  js:
+    https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.26/vue.min.js: {type: external, minified: true}
+
+vuejs-router:
+  remote: http://router.vuejs.org
+  version: 0.7.13
+  license:
+    name: MIT
+    url: https://github.com/vuejs/vue-router/blob/dev/LICENSE
+    gpl-compatible: true
+  js:
+    https://cdnjs.cloudflare.com/ajax/libs/vue-router/0.7.13/vue-router.min.js: {type: external, minified: true}
+  dependencies:
+    - dblog_ui/vue.js
+
+vuejs-resource:
+  remote: https://github.com/vuejs/vue-resource
+  version: 1.0.1
+  license:
+    name: MIT
+    url: https://github.com/vuejs/vue-resource/blob/master/LICENSE
+    gpl-compatible: true
+  js:
+    https://cdnjs.cloudflare.com/ajax/libs/vue-resource/1.0.1/vue-resource.min.js: {type: external, minified: true}
+  dependencies:
+    - dblog_ui/vue.js
+
+vuejs-pager:
+  remote: https://github.com/Chi-teck/vue-pager
+  version: 1.0.0
+  license:
+    name: GPL
+    gpl-compatible: true
+  js:
+    js/vue-pager.min.js: { minified: true}
+  dependencies:
+    - dblog_ui/vuejs
+    - dblog_ui/vuejs-router
+
+dblog_ui:
+  js:
+    js/store.js: {}
+    js/app.js: {}
+  css:
+    component:
+     css/dblog_ui.css: {}
+  dependencies:
+    - core/drupalSettings
+    - dblog_ui/vuejs
+    - dblog_ui/vuejs-router
+    - dblog_ui/vuejs-resource
+    - dblog_ui/vuejs-pager

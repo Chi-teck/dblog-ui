@@ -1,0 +1,9 @@
+name: DB log admin interface
+type: module
+description: Provide a better admin interface to database log entries.
+package: custom
+version: 8.x-1.0-dev
+dependencies:
+ - dblog
+ - rest
+core: 8.x
