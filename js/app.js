@@ -163,17 +163,18 @@
 
 // Translatable stings.
 /*
- Drupal.t('Filter log message'),
- Drupal.t('Type'),
- Drupal.t('Date'),
- Drupal.t('Message'),
- Drupal.t('User'),
- Drupal.t('Operations'),
- Drupal.t('Location'),
- Drupal.t('Referrer'),
- Drupal.t('Severity'),
- Drupal.t('Hostname'),
- Drupal.t('Back to overview page'),
- Drupal.t('Sort ascending'),
- Drupal.t('Sort descending'),
- */
+ Drupal.t('Filter log message');
+ Drupal.t('Type');
+ Drupal.t('Date');
+ Drupal.t('Message');
+ Drupal.t('User');
+ Drupal.t('Operations');
+ Drupal.t('Location');
+ Drupal.t('Referrer');
+ Drupal.t('Severity');
+ Drupal.t('Hostname');
+ Drupal.t('Back to overview page');
+ Drupal.t('Sort ascending');
+ Drupal.t('Sort descending')
+ Drupal.t('Loading');
+*/
