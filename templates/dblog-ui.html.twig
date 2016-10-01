@@ -23,7 +23,7 @@
           {% endverbatim %}
         </select>
       </div>
-      <div class="form-item form-actions">
+      <div class="form-item form-actions" v-show="$route.query.type || $route.query.severity">
         <button class="button" @click="reset" v-t>Reset</button>
       </div>
     </div>
