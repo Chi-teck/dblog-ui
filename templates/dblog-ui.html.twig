@@ -69,8 +69,8 @@
           {% endverbatim %}
       </tr>
       <tr v-if="!events.length" class="dblog-ui-placeholder">
-        <td colspan="4" v-if="loading">Loading...</td>
-        <td colspan="4" v-else>No log messages available.</td>
+        <td colspan="6" v-if="loading">Loading...</td>
+        <td colspan="6" v-else>No log messages available.</td>
       </tr>
     </tbody>
   </table>
