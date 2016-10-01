@@ -5,12 +5,11 @@
 <template id="dblog-ui-list">
 
   <details class="dblog-ui-filters" open>
-    <summary>Filter log message</summary>
+    <summary v-t>Filter log message</summary>
     <div class="details-wrapper">
       <div class="form-item" v-if="typeOptions.length">
         <label for="edit-type">Type</label>
-        <select multiple="multiple" id="edit-type" size="8" class="form-select"
-                v-model="type" @change="filter()">
+        <select multiple="multiple" id="edit-type" size="8" class="form-select" v-model="type" @change="filter()">
           {% verbatim %}
           <option v-for="option in typeOptions" value="{{ option }}">{{ option }}</option>
           {% endverbatim %}
@@ -18,63 +17,61 @@
       </div>
       <div class="form-item">
         <label for="edit-type">Severity</label>
-        <select multiple="multiple" id="edit-type" size="8" class="form-select"
-                v-model="severity" @change="filter()">
+        <select multiple="multiple" id="edit-type" size="8" class="form-select" v-model="severity" @change="filter()">
           {% verbatim %}
           <option v-for="(value, label) in severityOptions" value="{{ value }}">{{ label }}</option>
           {% endverbatim %}
         </select>
       </div>
       <div class="form-item form-actions">
-        <button class="button" @click="reset">Reset</button>
+        <button class="button" @click="reset" v-t>Reset</button>
       </div>
     </div>
   </details>
 
   <table class="admin-dblog-ui">
     <thead>
-    <tr>
-      <th></th>
-      <th class="priority-medium" :class="activeClass('type')">
-        <a v-link="typePath">Type
-          <table-sort-indicator :order="'type'"></table-sort-indicator>
-        </a>
-      </th>
-      <th class="priority-low" :class="activeClass('date')">
-        <a v-link="datePath">Date
-          <table-sort-indicator :order="'date'"
-                                :default="true"></table-sort-indicator>
-        </a>
-      </th>
-      <th>Message</th>
-      <th class="priority-medium" :class="activeClass('user')">
-        <a v-link="userPath">User
-          <table-sort-indicator :order="'user'"></table-sort-indicator>
-        </a>
-      </th>
-      <th class="priority-low">Operations</th>
-    </tr>
+      <tr>
+        <th></th>
+        <th class="priority-medium" :class="activeClass('type')">
+          <a v-link="typePath"><span v-t>Type</span>
+            <table-sort-indicator :order="'type'"></table-sort-indicator>
+          </a>
+        </th>
+        <th class="priority-low" :class="activeClass('date')">
+          <a v-link="datePath"><span v-t>Date</span>
+            <table-sort-indicator :order="'date'" :default="true"></table-sort-indicator>
+          </a>
+        </th>
+        <th v-t>Message</th>
+        <th class="priority-medium" :class="activeClass('user')">
+          <a v-link="userPath"><span v-t>User</span>
+            <table-sort-indicator :order="'user'"></table-sort-indicator>
+          </a>
+        </th>
+        <th class="priority-low" v-t>Operations</th>
+      </tr>
     </thead>
     <tbody :class="{'dblog-ui-data-loading' : loading}" transition="dblog-ui">
-    <tr v-for="event in events">
-      {% verbatim %}
-        <td class="icon {{ event.severityClass }}"></td>
-        <td class="priority-medium">{{ event.type }}</td>
-        <td class="priority-low">{{ event.date }}</td>
-        <td>
-          <a v-link="{name: 'details', params: {eventId: event.id}}">{{{ event.message }}}</a>
-        </td>
-        <td class="priority-medium"  v-if="event.user.url">
-          <a href="{{ event.user.url }}">{{ event.user.name }}</a>
-        </td>
-        <td class="priority-medium" v-else>{{ event.user.name }}</td>
-        <td class="priority-low">{{{ event.link }}}</td>
-        {% endverbatim %}
-    </tr>
-    <tr v-if="!events.length" class="dblog-ui-placeholder">
-      <td colspan="4" v-if="loading">Loading...</td>
-      <td colspan="4" v-else>No log messages available.</td>
-    </tr>
+      <tr v-for="event in events">
+        {% verbatim %}
+          <td class="icon {{ event.severityClass }}"></td>
+          <td class="priority-medium">{{ event.type }}</td>
+          <td class="priority-low">{{ event.date }}</td>
+          <td>
+            <a v-link="{name: 'details', params: {eventId: event.id}}">{{{ event.message }}}</a>
+          </td>
+          <td class="priority-medium"  v-if="event.user.url">
+            <a href="{{ event.user.url }}">{{ event.user.name }}</a>
+          </td>
+          <td class="priority-medium" v-else>{{ event.user.name }}</td>
+          <td class="priority-low">{{{ event.link }}}</td>
+          {% endverbatim %}
+      </tr>
+      <tr v-if="!events.length" class="dblog-ui-placeholder">
+        <td colspan="4" v-if="loading">Loading...</td>
+        <td colspan="4" v-else>No log messages available.</td>
+      </tr>
     </tbody>
   </table>
 
@@ -97,53 +94,53 @@
   <table class="dblog-ui-event">
     <tbody>
       <tr>
-        <th>Type</th>
+        <th v-t>Type</th>
         <td>{{ event.type }}</td>
       </tr>
       <tr>
-        <th>Date</th>
+        <th v-t>Date</th>
         <td>{{ event.date }}</td>
       </tr>
       <tr>
-        <th>User</th>
+        <th v-t>User</th>
         <td v-if="event.user.url">
           <a href="{{ event.user.url }}">{{ event.user.name }}</a>
         </td>
         <td v-else>{{ event.user.name }}</td>
       </tr>
       <tr>
-        <th>Location</th>
+        <th v-t>Location</th>
         <td>
           <a href="{{ event.location }}" v-if="event.location">{{ event.location }}</a>
         </td>
       </tr>
       <tr>
-        <th>Referrer</th>
+        <th v-t>Referrer</th>
         <td>
           <a href="{{ event.referrer }}" v-if="event.referrer">{{ event.referrer }}</a>
         </td>
       </tr>
       <tr>
-        <th>Message</th>
+        <th v-t>Message</th>
         <td>{{{ event.message }}}</td>
       </tr>
       <tr>
-        <th>Severity</th>
+        <th v-t>Severity</th>
         <td>{{ severityLevels[event.severity] }}</td>
       </tr>
       <tr>
-        <th>Hostname</th>
+        <th v-t>Hostname</th>
         <td>{{ event.hostname }}</td>
       </tr>
       <tr>
-        <th>Operations</th>
+        <th v-t>Operations</th>
         <td>{{{ event.link }}}</td>
       </tr>
     </tbody>
   </table>
 
   <div class="form-actions form-wrapper">
-      &larr; <a v-link="'/'" class="db-log">Back to overview page</a>
+      &larr; <a v-link="'/'" v-t class="db-log">Back to overview page</a>
   </div>
  {% endverbatim %}
 

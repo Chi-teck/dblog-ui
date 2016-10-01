@@ -1,9 +1,9 @@
 /**
  * @file
- * Dblog ui behaviors.
+ * DBlog ui behaviors.
  */
 
-(function (url, settings, store) {
+(function (url, t, settings, store) {
 
   'use strict';
 
@@ -26,6 +26,12 @@
   });
 
   Vue.component('table-sort-indicator', TableSortIndicator);
+
+  Vue.directive('t', function () {
+    console.log(this.el.innerHTML.trim());
+    console.log(Drupal.t(this.el.innerHTML.trim()));
+    this.el.innerHTML = Drupal.t(this.el.innerHTML);
+  });
 
   var List = Vue.extend({
 
@@ -152,4 +158,22 @@
 
   router.start(App, '#dblog-ui-app');
 
-} (Drupal.url, drupalSettings.dblogUi, new DblogUiStore));
+} (Drupal.url, Drupal.t, drupalSettings.dblogUi, new DblogUiStore));
+
+
+// Translatable stings.
+/*
+ Drupal.t('Filter log message'),
+ Drupal.t('Type'),
+ Drupal.t('Date'),
+ Drupal.t('Message'),
+ Drupal.t('User'),
+ Drupal.t('Operations'),
+ Drupal.t('Location'),
+ Drupal.t('Referrer'),
+ Drupal.t('Severity'),
+ Drupal.t('Hostname'),
+ Drupal.t('Back to overview page'),
+ Drupal.t('Sort ascending'),
+ Drupal.t('Sort descending'),
+*/
