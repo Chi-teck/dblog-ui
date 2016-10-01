@@ -142,32 +142,35 @@ class DblogUiController extends ControllerBase {
     $total = $query->getCountQuery()->execute()->fetchField();
     $result = $query->execute();
 
+    $severity_classes = static::getLogLevelClassMap();
     $data = [];
-    foreach ($result as $record) {
+    foreach ($result as $event) {
 
       /** @var \Drupal\user\Entity\User $account */
-      $account = $this->entityTypeManager->getStorage('user')->load($record->uid);
+      $account = $this->entityTypeManager->getStorage('user')->load($event->uid);
       $user = [];
       $user['name'] = $account->getDisplayName();
       $user['url'] = $account->isAuthenticated() ? $account->toUrl()->toString() : NULL;
       $data[] = [
-        'id' => $record->wid,
-        'type' => $record->type,
+        'id' => $event->wid,
+        'type' => $event->type,
         'user' => $user,
-        'date' => $this->dateFormatter->format($record->timestamp, 'short'),
-        'message' => Unicode::truncate($this->formatMessage($record), 130, TRUE, TRUE),
+        'date' => $this->dateFormatter->format($event->timestamp, 'short'),
+        'message' => Unicode::truncate($this->formatMessage($event), 130, TRUE, TRUE),
+        'severityClass' => $severity_classes[$event->severity],
+        'link' => $event->link,
       ];
     }
 
     $this->moduleHandler->loadInclude('dblog', 'admin.inc');
     $filters = dblog_filters();
 
-    $respsonse = [
+    $response = [
       'data' => $data,
       'total' => $total,
       'typeOptions' => isset($filters['type']['options']) ? array_keys($filters['type']['options']) : [],
     ];
-    return new JsonResponse($respsonse);
+    return new JsonResponse($response);
   }
 
   /**
@@ -215,17 +218,38 @@ class DblogUiController extends ControllerBase {
   /**
    * Formats a database log message.
    *
-   * @param object $row
+   * @param object $event
    *   The record from the watchdog table. The object properties are: wid, uid,
    *   severity, type, timestamp, message, variables, link, name.
    *
    * @return string|\Drupal\Core\StringTranslation\TranslatableMarkup
    *   The formatted log message.
    */
-  public function formatMessage($row) {
-    $message = Xss::filterAdmin($row->message);
-    $variables = @unserialize($row->variables);
+  public function formatMessage($event) {
+    $message = Xss::filterAdmin($event->message);
+    $variables = @unserialize($event->variables);
     return $variables == NULL ? $message : t($message, $variables);
   }
 
+  /**
+   * Gets an array of log level classes.
+   *
+   * @return array
+   *   An array of log level classes.
+   */
+  public static function getLogLevelClassMap() {
+    return array(
+      RfcLogLevel::DEBUG => 'dblog-debug',
+      RfcLogLevel::INFO => 'dblog-info',
+      RfcLogLevel::NOTICE => 'dblog-notice',
+      RfcLogLevel::WARNING => 'dblog-warning',
+      RfcLogLevel::ERROR => 'dblog-error',
+      RfcLogLevel::CRITICAL => 'dblog-critical',
+      RfcLogLevel::ALERT => 'dblog-alert',
+      RfcLogLevel::EMERGENCY => 'dblog-emergency',
+    );
+  }
+
 }
+
+//usleep(598000);

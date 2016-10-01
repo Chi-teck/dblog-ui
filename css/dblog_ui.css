@@ -2,10 +2,13 @@
   display: none;
 }
 
-.dblog-ui-data-loading {
+.dblog-ui-data-loading tr {
   opacity: 0.25;
 }
 
+.dblog-ui-data-loading .dblog-ui-placeholder {
+  opacity: 1;
+}
 
 .dblog-ui-filters .form-item {
   display: inline-block;
@@ -19,18 +22,22 @@
 }
 
 /* always present */
-.expand-transition {
+.dblog-ui-transition tr {
   transition: all .55s ease;
 }
 
-/* .expand-enter defines the starting state for entering */
-/* .expand-leave defines the ending state for leaving */
-.expand-enter {
-  /*transform: translateX(30%);*/
-  opacity: 0;
+.admin-dblog-ui .icon {
+  background: no-repeat center;
+  width: 16px;
 }
 
-.expand-leave {
-  display: none;
-  opacity: 0;
+.admin-dblog-ui .dblog-warning.icon {
+  background-image: url(../images/warning.svg);
+}
+
+.admin-dblog-ui .dblog-error,
+.admin-dblog-ui .dblog-critical,
+.admin-dblog-ui .dblog-alert,
+.admin-dblog-ui .dblog-emergency {
+  background-image: url(../images/error.svg);
 }

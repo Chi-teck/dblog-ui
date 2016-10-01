@@ -37,7 +37,7 @@
 
     data: function () {
       return {
-        records: [],
+        events: [],
         loading: false,
         totalPages: 1,
         type: [],
@@ -71,7 +71,7 @@
         store.getRecords(this.$route.query, function (data) {
           that.totalPages = Math.ceil(data.total / 50);
           that.typeOptions = data.typeOptions;
-          that.records = data.data;
+          that.events = data.data;
           that.loading = false;
         });
       },
@@ -91,7 +91,7 @@
 
         if (order) {
           query.order = order;
-          query.sort = query.sort == 'desc' ? 'asc' : 'desc';
+          query.sort = !query.sort || query.sort == 'desc' ? 'asc' : 'desc';
         }
 
         query.type = this.type;
@@ -121,27 +121,16 @@
 
     ready: function () {
       var that = this;
+      this.loading = true;
       store.getRecord(this.$route.params.eventId, function (data) {
         that.event = data;
+        that.loading = false;
       });
-
-      // Append overview link to breadcrumb.
-      var breadcrumb = document.getElementsByClassName('breadcrumb')[0];
-      if (breadcrumb) {
-        var list = breadcrumb.getElementsByTagName('ol')[0];
-        var processed = list.getAttribute('data-dblog-ui-processed');
-        if (!processed) {
-          list.setAttribute('data-dblog-ui-processed', 'processed');
-          var li = document.createElement('li');
-          li.innerHTML = ' ' + 'Recent log messages'.link(url('admin/reports/dblog_ui#!/'));
-          list.appendChild(li);
-        }
-      }
-
     },
 
     data: function () {
       return {
+        loading: false,
         severityLevels: settings.severityLevels,
         event: {}
       };
