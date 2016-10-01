@@ -1,15 +1,17 @@
 /**
  * @file
- * DBlog ui behaviors.
+ * DBlog UI behaviors.
  */
 
-(function (url, t, settings, store) {
+(function (url, settings, store) {
 
   'use strict';
 
+  /* global Vue */
+  /* global VuePager */
   Vue.component('pager', VuePager);
 
-  var TableSortIndicator = Vue.extend({
+  Vue.component('table-sort-indicator', Vue.extend({
     template: '#dblog-ui-table-sort-indicator',
     props: {
       order: null,
@@ -17,22 +19,19 @@
     },
     computed: {
       show: function () {
-        return this.$route.query.order ? this.$route.query.order == this.order : this.default;
+        return this.$route.query.order ? this.$route.query.order === this.order : this.default;
       },
       sortClass: function () {
-        return 'tablesort--' + (this.$route.query.sort == 'asc' ? 'desc' : 'asc');
+        return 'tablesort--' + (this.$route.query.sort === 'asc' ? 'desc' : 'asc');
       }
     }
-  });
-
-  Vue.component('table-sort-indicator', TableSortIndicator);
+  }));
 
   Vue.directive('t', function () {
-    console.log(this.el.innerHTML.trim());
-    console.log(Drupal.t(this.el.innerHTML.trim()));
-    this.el.innerHTML = Drupal.t(this.el.innerHTML);
+    this.el.innerHTML = Drupal.t(this.el.innerHTML.trim());
   });
 
+  // Overview page.
   var List = Vue.extend({
 
     template: '#dblog-ui-list',
@@ -50,7 +49,7 @@
         typeOptions: [],
         severity: [],
         severityOptions: settings.severityLevels
-      }
+      };
     },
 
     computed: {
@@ -66,7 +65,7 @@
     },
 
     watch: {
-      '$route': 'updateData'
+      $route: 'updateData'
     },
 
     methods: {
@@ -97,7 +96,7 @@
 
         if (order) {
           query.order = order;
-          query.sort = !query.sort || query.sort == 'desc' ? 'asc' : 'desc';
+          query.sort = !query.sort || query.sort === 'desc' ? 'asc' : 'desc';
         }
 
         query.type = this.type;
@@ -106,7 +105,7 @@
         return {
           path: '/',
           query: query
-        }
+        };
       },
 
       reset: function () {
@@ -116,12 +115,13 @@
       },
 
       activeClass: function (order) {
-        return this.$route.query.order == order ? 'is-active' : '';
+        return this.$route.query.order === order ? 'is-active' : '';
       }
     }
 
   });
 
+  // Event details page.
   var Details = Vue.extend({
     template: '#dblog-ui-details',
 
@@ -141,8 +141,10 @@
         event: {}
       };
     }
+
   });
 
+  /* global VueRouter */
   var router = new VueRouter();
   router.map({
     '/': {
@@ -153,12 +155,10 @@
       component: Details
     }
   });
+  router.start(Vue.extend({}), '#dblog-ui-app');
 
-  var App = Vue.extend({});
-
-  router.start(App, '#dblog-ui-app');
-
-} (Drupal.url, Drupal.t, drupalSettings.dblogUi, new DblogUiStore));
+  /* global DblogUiStore */
+}(Drupal.url, drupalSettings.dblogUi, new DblogUiStore()));
 
 
 // Translatable stings.
@@ -176,4 +176,4 @@
  Drupal.t('Back to overview page'),
  Drupal.t('Sort ascending'),
  Drupal.t('Sort descending'),
-*/
+ */

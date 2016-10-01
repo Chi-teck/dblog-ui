@@ -21,7 +21,6 @@
   vertical-align: top;
 }
 
-/* always present */
 .dblog-ui-transition tr {
   transition: all .55s ease;
 }

@@ -38,7 +38,7 @@ class DblogUiController extends ControllerBase {
   /**
    * The database connection.
    *
-   * @var \Drupal\Core\Database\Connection;
+   * @var \Drupal\Core\Database\Connection
    */
   protected $dbConnection;
 
@@ -81,7 +81,7 @@ class DblogUiController extends ControllerBase {
   }
 
   /**
-   * Builds the response.
+   * Builds the overview page.
    */
   public function overview() {
     $build['content'] = ['#theme' => 'dblog_ui'];
@@ -228,7 +228,9 @@ class DblogUiController extends ControllerBase {
   public function formatMessage($event) {
     $message = Xss::filterAdmin($event->message);
     $variables = @unserialize($event->variables);
+    // @codingStandardsIgnoreStart
     return $variables == NULL ? $message : t($message, $variables);
+    // @codingStandardsIgnoreEn
   }
 
   /**
@@ -252,4 +254,3 @@ class DblogUiController extends ControllerBase {
 
 }
 
-//usleep(598000);

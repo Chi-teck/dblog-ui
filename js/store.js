@@ -3,16 +3,20 @@
  * Events store service.
  */
 
-var DblogUiStore = function () {
+window.DblogUiStore = function () {
+
+  'use strict';
+
+  /* global Vue */
 
   var endPoint = 'api/dblog-ui/';
 
   function encodeQueryData(query) {
     var ret = [];
     for (var param in query) {
-      ret.push(encodeURIComponent(param) + "=" + encodeURIComponent(query[param]));
+      ret.push(encodeURIComponent(param) + '=' + encodeURIComponent(query[param]));
     }
-    return ret.join("&");
+    return ret.join('&');
   }
 
   this.getRecords = function (query, callback) {
@@ -21,7 +25,7 @@ var DblogUiStore = function () {
     function successCallback(response) {
       response
         .json()
-        .then(callback)
+        .then(callback);
     }
 
     function errorCallback(response) {
@@ -37,7 +41,7 @@ var DblogUiStore = function () {
     function successCallback(response) {
       response
         .json()
-        .then(callback)
+        .then(callback);
     }
 
     function errorCallback(response) {

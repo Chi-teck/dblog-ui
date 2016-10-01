@@ -8,7 +8,7 @@ use Symfony\Component\Routing\RouteCollection;
 /**
  * DBlog UI route subscriber.
  */
-class DblogUiRouteSubscriber  extends RouteSubscriberBase {
+class DblogUiRouteSubscriber extends RouteSubscriberBase {
 
   /**
    * {@inheritdoc}
