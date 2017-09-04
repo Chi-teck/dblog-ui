@@ -1,0 +1,6 @@
+{
+  "name": "drupal/dblog_ui",
+  "type": "drupal-module",
+  "description": "DB Log UI Drupal module",
+  "keywords": ["Drupal"],
+}
