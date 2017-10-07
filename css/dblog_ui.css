@@ -21,7 +21,8 @@
   vertical-align: top;
 }
 
-.dblog-ui-transition tr {
+.dblog-ui-enter-active tr,
+.dblog-ui-leave-active tr {
   transition: all .55s ease;
 }
 
