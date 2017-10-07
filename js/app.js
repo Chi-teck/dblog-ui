@@ -25,7 +25,7 @@
         return this.$route.query.order ? this.$route.query.order === this.order : this.default;
       },
       sortClass: function () {
-        return 'tablesort--' + (this.$route.query.sort === 'asc' ? 'desc' : 'asc');
+        return 'tablesort tablesort--' + (this.$route.query.sort === 'asc' ? 'desc' : 'asc');
       }
     }
   }));
@@ -95,13 +95,30 @@
           query[param] = this.$route.query[param];
         })
 
+        // Reset querystring.
+        // Set to NULL, UNDEFINED or empty string does not work, so we delete it.
         if (order) {
           query.order = order;
           query.sort = !query.sort || query.sort === 'desc' ? 'asc' : 'desc';
         }
+        else {
+          delete query.order;
+          delete query.sort;
+        }
 
-        query.type = this.type;
-        query.severity = this.severity;
+        if (this.type.length) {
+          query.type = this.type;
+        }
+        else {
+          delete query.type;
+        }
+
+        if (this.severity.length) {
+          query.severity = this.severity;
+        }
+        else {
+          delete query.severity;
+        }
 
         return {
           path: '/',
