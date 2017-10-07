@@ -8,13 +8,13 @@
         <div class="form-item" v-if="typeOptions.length">
           <label for="edit-type">Type</label>
             <select multiple="multiple" id="edit-type" size="8" class="form-select" v-model="type" @change="filter">
-            <option v-for="(label, value) in typeOptions"  v-bind:key="value" v-bind:value="value">{{ label }}</option>
+            <option v-for="(label, value) in typeOptions"  :key="value" :value="value">{{ label }}</option>
           </select>
         </div>
         <div class="form-item">
           <label for="edit-type">Severity</label>
             <select multiple="multiple" id="edit-type" size="8" class="form-select" v-model="severity" @change="filter">
-            <option v-for="(label, value) in severityOptions" v-bind:key="value" v-bind:value="value">{{ label }}</option>
+            <option v-for="(label, value) in severityOptions" :key="value" :value="value">{{ label }}</option>
           </select>
         </div>
         <div class="form-item form-actions" v-show="$route.query.type || $route.query.severity">
@@ -47,15 +47,15 @@
       </thead>
         <transition name="dblog-ui">
           <tbody :class="{'dblog-ui-data-loading' : loading}">
-        <tr v-for="event in events" v-bind:key="event.id">
-            <td v-bind:class="['icon', event.severityClass]"></td>
+        <tr v-for="event in events" :key="event.id">
+            <td :class="['icon', event.severityClass]"></td>
             <td class="priority-medium">{{ event.type }}</td>
             <td class="priority-low">{{ event.date }}</td>
             <td>
               <router-link :to="{name: 'details', params: {eventId: event.id}}" v-html="event.message"></router-link>
             </td>
             <td class="priority-medium"  v-if="event.user.url">
-              <a v-bind:href="event.user.url" v-html="event.user.name"></a>
+              <a :href="event.user.url" v-html="event.user.name"></a>
             </td>
             <td class="priority-medium" v-else v-html="event.user.name"></td>
             <td class="priority-low" v-html="event.link"></td>
@@ -72,7 +72,7 @@
 </template>
 
 <template id="dblog-ui-table-sort-indicator">
-  <span v-if="show" class="tablesort" :class="sortClass">
+  <span v-if="show" :class="sortClass">
     <span v-if="sort == 'desc'" class="visually-hidden">Sort ascending</span>
     <span v-else class="visually-hidden">Sort descending</span>
   </span>
@@ -93,20 +93,20 @@
         <tr>
           <th v-t>User</th>
           <td v-if="event.user && event.user.url">
-            <a v-bind:href="event.user.url">{{event.user.name}}</a>
+            <a :href="event.user.url">{{event.user.name}}</a>
           </td>
           <td v-else>{{event.user && event.user.name}}</td>
         </tr>
         <tr>
           <th v-t>Location</th>
           <td>
-            <a v-bind:href="event.location" v-if="event.location">{{ event.location }}</a>
+            <a :href="event.location" v-if="event.location">{{ event.location }}</a>
           </td>
         </tr>
         <tr>
           <th v-t>Referrer</th>
           <td>
-            <a v-bind:href="event.referrer" v-if="event.referrer">{{ event.referrer }}</a>
+            <a :href="event.referrer" v-if="event.referrer">{{ event.referrer }}</a>
           </td>
         </tr>
         <tr>
