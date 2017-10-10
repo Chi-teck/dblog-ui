@@ -18,17 +18,20 @@
       default: false
     },
     computed: {
+      sort: function () {
+        return this.$route.query.sort;
+      },
       show: function () {
         return this.$route.query.order ? this.$route.query.order === this.order : this.default;
       },
       sortClass: function () {
-        return 'tablesort--' + (this.$route.query.sort === 'asc' ? 'desc' : 'asc');
+        return 'tablesort tablesort--' + (this.$route.query.sort === 'asc' ? 'desc' : 'asc');
       }
     }
   }));
 
-  Vue.directive('t', function () {
-    this.el.innerHTML = Drupal.t(this.el.innerHTML.trim());
+  Vue.directive('t', function (event) {
+    event.innerHTML = Drupal.t(event.innerHTML.trim());
   });
 
   // Overview page.
@@ -36,7 +39,7 @@
 
     template: '#dblog-ui-list',
 
-    ready: function () {
+    mounted: function () {
       this.updateData();
     },
 
@@ -82,25 +85,40 @@
       },
 
       filter: function () {
-        this.$router.go(this.buildPath());
+        this.$router.push(this.buildPath());
       },
 
       buildPath: function (order) {
 
         var query = {};
-        for (var param in this.$route.query) {
-          if (this.$route.query.hasOwnProperty(param)) {
-            query[param] = this.$route.query[param];
-          }
-        }
+        Object.keys(this.$route.query).forEach(param => {
+          query[param] = this.$route.query[param];
+        })
 
+        // Reset querystring.
+        // Set to NULL, UNDEFINED or empty string does not work, so we delete it.
         if (order) {
           query.order = order;
           query.sort = !query.sort || query.sort === 'desc' ? 'asc' : 'desc';
         }
+        else {
+          delete query.order;
+          delete query.sort;
+        }
 
-        query.type = this.type;
-        query.severity = this.severity;
+        if (this.type.length) {
+          query.type = this.type;
+        }
+        else {
+          delete query.type;
+        }
+
+        if (this.severity.length) {
+          query.severity = this.severity;
+        }
+        else {
+          delete query.severity;
+        }
 
         return {
           path: '/',
@@ -125,7 +143,7 @@
   var Details = Vue.extend({
     template: '#dblog-ui-details',
 
-    ready: function () {
+    mounted: function () {
       var that = this;
       this.loading = true;
       store.getRecord(this.$route.params.eventId, function (data) {
@@ -145,17 +163,19 @@
   });
 
   /* global VueRouter */
-  var router = new VueRouter();
-  router.map({
-    '/': {
-      component: List
-    },
-    '/event/:eventId': {
-      name: 'details',
-      component: Details
-    }
-  });
-  router.start(Vue.extend({}), '#dblog-ui-app');
+
+  var router = new VueRouter({
+    base: drupalSettings.path.baseUrl + drupalSettings.path.currentPath,
+    routes: [
+      { path: '/', component: List },
+      { path: '/event/:eventId', name: 'details', component: Details }
+    ]
+  })
+
+  var app = new Vue({
+    router: router,
+    template: '<router-view></router-view>'
+  }).$mount('#dblog-ui-app');
 
   /* global DblogUiStore */
 }(Drupal.url, drupalSettings.dblogUi, new DblogUiStore()));
