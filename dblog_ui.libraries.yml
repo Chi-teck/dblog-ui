@@ -18,7 +18,7 @@ vuejs-router:
   js:
     https://cdnjs.cloudflare.com/ajax/libs/vue-router/2.0.0/vue-router.min.js: {type: external, minified: true}
   dependencies:
-    - dblog_ui/vue.js
+    - dblog_ui/vuejs
 
 vuejs-resource:
   remote: https://github.com/vuejs/vue-resource
@@ -30,7 +30,7 @@ vuejs-resource:
   js:
     https://cdnjs.cloudflare.com/ajax/libs/vue-resource/1.3.4/vue-resource.min.js: {type: external, minified: true}
   dependencies:
-    - dblog_ui/vue.js
+    - dblog_ui/vuejs
 
 vuejs-pager:
   remote: https://github.com/Chi-teck/vue-pager
