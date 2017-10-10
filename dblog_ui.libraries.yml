@@ -6,7 +6,7 @@ vuejs:
     url: https://github.com/vuejs/vue/blob/dev/LICENSE
     gpl-compatible: true
   js:
-    https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.4/vue.js: {type: external, minified: true}
+    https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.4/vue.min.js: {type: external, minified: true}
 
 vuejs-router:
   remote: http://router.vuejs.org
