@@ -10,13 +10,13 @@ vuejs:
 
 vuejs-router:
   remote: http://router.vuejs.org
-  version: 2.0.0
+  version: 2.7.0
   license:
     name: MIT
     url: https://github.com/vuejs/vue-router/blob/dev/LICENSE
     gpl-compatible: true
   js:
-    https://cdnjs.cloudflare.com/ajax/libs/vue-router/2.0.0/vue-router.min.js: {type: external, minified: true}
+    https://cdnjs.cloudflare.com/ajax/libs/vue-router/2.7.0/vue-router.min.js: {type: external, minified: true}
   dependencies:
     - dblog_ui/vuejs
 
