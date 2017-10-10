@@ -8,7 +8,7 @@
         <div class="form-item" v-if="typeOptions.length">
           <label for="edit-type">Type</label>
             <select multiple="multiple" id="edit-type" size="8" class="form-select" v-model="type" @change="filter">
-            <option v-for="(label, value) in typeOptions"  :key="value" :value="value">{{ label }}</option>
+            <option v-for="(label, value) in typeOptions" :key="value" :value="label">{{ label }}</option>
           </select>
         </div>
         <div class="form-item">
