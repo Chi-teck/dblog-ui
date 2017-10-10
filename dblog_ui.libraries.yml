@@ -6,17 +6,17 @@ vuejs:
     url: https://github.com/vuejs/vue/blob/dev/LICENSE
     gpl-compatible: true
   js:
-    https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.4/vue.min.js: {type: external, minified: true}
+    https://unpkg.com/vue@2.4.4/dist/vue.min.js: {type: external, minified: true}
 
 vuejs-router:
-  remote: http://router.vuejs.org
+  remote: https://router.vuejs.org
   version: 2.7.0
   license:
     name: MIT
     url: https://github.com/vuejs/vue-router/blob/dev/LICENSE
     gpl-compatible: true
   js:
-    https://cdnjs.cloudflare.com/ajax/libs/vue-router/2.7.0/vue-router.min.js: {type: external, minified: true}
+    https://unpkg.com/vue-router@2.7.0/dist/vue-router.min.js: {type: external, minified: true}
   dependencies:
     - dblog_ui/vuejs
 
@@ -28,7 +28,7 @@ vuejs-resource:
     url: https://github.com/vuejs/vue-resource/blob/master/LICENSE
     gpl-compatible: true
   js:
-    https://cdnjs.cloudflare.com/ajax/libs/vue-resource/1.3.4/vue-resource.min.js: {type: external, minified: true}
+    https://unpkg.com/vue-resource@1.3.4/dist/vue-resource.min.js: {type: external, minified: true}
   dependencies:
     - dblog_ui/vuejs
 
