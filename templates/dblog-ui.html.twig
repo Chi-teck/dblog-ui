@@ -52,7 +52,7 @@
             <td class="priority-medium">{{ event.type }}</td>
             <td class="priority-low">{{ event.date }}</td>
             <td>
-              <router-link :to="{name: 'details', params: {eventId: event.id}}" v-html="event.message"></router-link>
+              <router-link :to="{name: 'details', params: {eventId: event.id}, query: {page: $route.query.page}}" v-html="event.message"></router-link>
             </td>
             <td class="priority-medium"  v-if="event.user.url">
               <a :href="event.user.url" v-html="event.user.name"></a>
@@ -129,7 +129,7 @@
     </table>
 
     <div class="form-actions form-wrapper">
-        &larr; <router-link to="/" v-t class="db-log">Back to overview page</router-link>
+        &larr; <router-link :to="{ path: '/', query: { page: $route.query.page }}" v-t class="db-log">Back to overview page</router-link>
     </div>
   </div>
 </template>
